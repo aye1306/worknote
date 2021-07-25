@@ -1,45 +1,49 @@
-
+queryWork();
 async function queryWork(){
 	let des = null;
 	const userId = JSON.parse(localStorage.getItem("UserData")).user_id;
-	const {data} = await axios.get(location.origin+"/worksnotes/src/QueryWorklast.php?id="+userId);
-	data.forEach((val,i)=>{
-		if (val.w_des == "") {
-			des = '<h5 class="text-danger">ไม่ได้ใส่รายละเอียด</h5>';
-		}else{
-			des =  '<h5 class="text-dark">'+val.w_des+'</h5>';
+	const {data} = await axios.get(location.origin+"/worksnotes/src/QueryWorklast.php?user_id="+userId);
+  if(data.status === 0){
+    $("#w_size_span").append(0);
+  }else{
+    data.result.forEach((val,i)=>{
+      if (val.w_des == "") {
+        des = '<h5 class="text-danger">ไม่ได้ใส่รายละเอียด</h5>';
+      }else{
+        des =  '<h5 class="text-dark">'+val.w_des+'</h5>';
+      }
+      $("#work").append(
+        '<div class="col-md-6">'
+              +'    <div class="card mb-3 ml-1 mr-1 shadow rounded">'
+              +'        <div class="card-body" style="background-color:#C0EEFF;" aria-controls="work_show-'+val.w_id+'" aria-expanded="true" data-toggle="collapse" href="#work_show-'+val.w_id+'">'
+              +'            <h5 class="card-subtitle text-primary">'
+              +'              <strong>วิชา '+val.w_subject +' : '
+              +'                <span class="text-dark" style="font-size:18px;"> '+val.w_name
+              +'                    <i class="fa fa-hourglass-end align-items-center d-flex justify-content-end" style="font-size:15px;color:#EA9017;">'
+              +'                    </i>'
+              +'                </span>'
+              +'              </strong>'
+              +'           </h5>'
+              +'            <span class="text-secondary" style="font-size:18px;" id="deadline"><b>'+conversDate(val.w_date)+'</b></span><br>'
+              +'            <span class="text-info">  เหลือเวลาอีก <b class="text-danger"> '+val.time+' </b> วัน </span>'
+              +'        </div>'
+              +'        <div class="collapse" id="work_show-'+val.w_id+'">'
+              +'            <div class="card-footer bg-light">'
+              +'              <div class="align-items-center d-flex justify-content-center">'
+              +'                <h5 class="text-dark">'+des+'</h5>'
+              +'              </div>'
+              +'              <div class="align-items-center d-flex justify-content-center mt-4">'
+              +'                <button type="button" class="btn btn-outline-success btn-sm">ทำเสร็จแล้ว</button>'
+              +'              </div>'
+              +'            </div>'
+              +'        </div>'
+              +'    </div>'
+              +'</div>'
+      );
+    })
+    $("#w_size_span").append(data.length);
+  }
 
-		}
-		$("#work").append(
-			'<div class="col-md-6">'
-            +'    <div class="card mb-3 ml-1 mr-1 shadow rounded">'
-            +'        <div class="card-body" style="background-color:#C0EEFF;" aria-controls="work_show-'+val.w_id+'" aria-expanded="true" data-toggle="collapse" href="#work_show-'+val.w_id+'">'
-            +'            <h5 class="card-subtitle text-primary">'
-            +'              <strong>วิชา '+val.w_subject +' : '
-            +'                <span class="text-dark" style="font-size:18px;"> '+val.w_name
-            +'                    <i class="fa fa-hourglass-end align-items-center d-flex justify-content-end" style="font-size:15px;color:#EA9017;">'
-            +'                    </i>'
-            +'                </span>'
-            +'              </strong>'
-            +'           </h5>'
-            +'            <span class="text-secondary" style="font-size:18px;" id="deadline"><b>'+conversDate(val.w_date)+'</b></span><br>'
-            +'            <span class="text-info">  เหลือเวลาอีก <b class="text-danger"> '+val.time+' </b> วัน </span>'
-            +'        </div>'
-            +'        <div class="collapse" id="work_show-'+val.w_id+'">'
-            +'            <div class="card-footer bg-light">'
-            +'              <div class="align-items-center d-flex justify-content-center">'
-            +'                <h5 class="text-dark">'+des+'</h5>'
-            +'              </div>'
-            +'              <div class="align-items-center d-flex justify-content-center mt-4">'
-            +'                <button type="button" class="btn btn-outline-success btn-sm">ทำเสร็จแล้ว</button>'
-            +'              </div>'
-            +'            </div>'
-            +'        </div>'
-            +'    </div>'
-            +'</div>'
-		);
-	})
-	$("#w_size_span").append(data.length);
 }
 
 function conversDate(call_date){
@@ -82,45 +86,47 @@ function login(){
         'info'
       );
     }else{
-      $.ajax({
-            type: "POST",
-            url: location.origin+"/worksnotes/src/ControllerHome.php",
-            data: "user="+user+"&pass="+pass+"&section=login",
-            success:function(data){
-            	const jsonob = JSON.parse(data);
-            	const user = jsonob.user;
+      const send_data = {
+        "user":user,
+        "pass":pass,"section":"login"
+      } 
+      axios.post(location.origin+"/worksnotes/src/ControllerHome.php", 
+                JSON.stringify(send_data)                
+      ).then(function(response) {
+        console.log(response.data);
+        const jsonob = response.data;
+        const user = jsonob.user;
 
-            	if (jsonob.status==0) {
-            		 Swal.fire({
-	                  icon: 'error',
-	                  title: 'ไม่สามารถเข้าสู่ระบบได้',
-	                  text: 'ตรวจสอบชื่อผู้ใช้หรือรหัสผ่าน !!'
-	                })
-            	}else{
-            		const userData = {
-	            		'user_id':user.user_id,
-	            		'username':user.username,
-	            		'nickname':user.nickname,
-	            		'email':user.email,
-	            		'time_reg':user.time_reg
-            		}
-            		localStorage.setItem("UserData",JSON.stringify(userData));
-            		localStorage.setItem("status",1);
-            		Swal.fire({
-	                  position: 'center',
-	                  icon: 'success',
-	                  title: 'กำลังเข้าสู่ระบบ',
-	                  text: 'จะพาไปยังหน้า หน้าแรก',
-	                  showConfirmButton: false,
-	                  timer: 2000
-	                });
-	                setTimeout(function(){ 
-	                  location.href = location.origin+"/worksnotes"; 
-	                }, 2300);
-            	}
+        if (jsonob.status==0) {
+           Swal.fire({
+              icon: 'error',
+              title: 'ไม่สามารถเข้าสู่ระบบได้',
+              text: 'ตรวจสอบชื่อผู้ใช้หรือรหัสผ่าน !!'
+            })
+        }else{
+          const userData = {
+            'user_id':user.user_id,
+            'username':user.username,
+            'nickname':user.nickname,
+            'email':user.email,
+            'time_reg':user.time_reg
+          }
+          localStorage.setItem("UserData",JSON.stringify(userData));
+          localStorage.setItem("status",1);
+          Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'กำลังเข้าสู่ระบบ',
+              text: 'จะพาไปยังหน้า หน้าแรก',
+              showConfirmButton: false,
+              timer: 2000
+            });
+            setTimeout(function(){ 
+              location.href = location.origin+"/worksnotes"; 
+            }, 2300);
+        }
 
-            }
-        });
+      });
 
     }
    
@@ -174,43 +180,43 @@ function login(){
         'info'
       );
     }else{
+      const send_data = {
+        "email":email,"user":user,
+        "pass":pass,"nickname":nickname,"section":"register"
+      } 
+      axios.post(location.origin+"/worksnotes/src/ControllerHome.php", 
+                JSON.stringify(send_data)                
+      ).then(function(response) {
+        console.log(response.data);
+        const jsonob = response.data;
+        const status = jsonob.status;
 
-       $.ajax({
-            type: "POST",
-            url: location.origin+"/worksnotes/src/ControllerHome.php",
-            data: "email="+email+"&user="+user+"&pass="+pass+"&nickname="+nickname+"&section=register",
-            success:function(data){
-            	const jsonob = JSON.parse(data);
-            	const status = jsonob.status;
-
-              if (status === 0) {
-                Swal.fire({
-                  position: 'center',
-                  icon: 'success',
-                  title: 'สมัครสมาชิกสำเร็จ',
-                  text: 'จะพาไปยังหน้า เข้าสู่ระบบ',
-                  showConfirmButton: false,
-                  timer: 2000
-                });
-                setTimeout(function(){ 
-                  location.href = location.origin+"/worksnotes/login.php";
-                }, 2100); 
-              }else if(status === "e"){
-                Swal.fire({
-                  icon: 'error',
-                  title: 'รูปแบบอีเมลไม่ถูกต้อง',
-                  text: 'โปรดกรอกอีเมลอีกครั้ง !!'
-                })
-              }else if(status === 1){
-                Swal.fire({
-                  icon: 'error',
-                  title: 'มีชื่อผู้ใช้นี้แล้ว',
-                  text: 'โปรดกรอกชื่อผู้ใช้ที่ไม่ซ้ำ !!'
-                })
-              }
-            
-        	}
-        });
+        if (status === 0) {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'สมัครสมาชิกสำเร็จ',
+            text: 'จะพาไปยังหน้า เข้าสู่ระบบ',
+            showConfirmButton: false,
+            timer: 2000
+          });
+          setTimeout(function(){ 
+            location.href = location.origin+"/worksnotes/login.php";
+          }, 2100); 
+        }else if(status === "e"){
+          Swal.fire({
+            icon: 'error',
+            title: 'รูปแบบอีเมลไม่ถูกต้อง',
+            text: 'โปรดกรอกอีเมลอีกครั้ง !!'
+          })
+        }else if(status === 1){
+          Swal.fire({
+            icon: 'error',
+            title: 'มีชื่อผู้ใช้นี้แล้ว',
+            text: 'โปรดกรอกชื่อผู้ใช้ที่ไม่ซ้ำ !!'
+          })
+        }
+      });
     }
   }
 
@@ -245,3 +251,14 @@ function checkpass(){
    
   }
 
+work_type()
+async function work_type(){
+  const send_data = {
+    "section":"worktype"
+  } 
+  axios.post(location.origin+"/worksnotes/src/ControllerHome.php", 
+            JSON.stringify(send_data)                
+  ).then(function(res) {
+    console.log(res.data)
+  });
+}

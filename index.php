@@ -17,7 +17,7 @@
 
                 </div>
                 <!--row-->
-                <div class="row h-50"></div>
+                <div class="row h-25"></div>
             </div>
             <!--container-fluid-->
             <?php include('include/nav_footer.php'); ?>
@@ -32,6 +32,5 @@
         if (length == 0) {
             location.href = location.origin+"/worksnotes/login.php";
         } // checklogin
-        queryWork();
     });
 </script>
