@@ -65,5 +65,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
         localStorage.clear();
+        console.log("GitHub Success!!")
     });
 </script>
