@@ -1,0 +1,70 @@
+ body {
+     font-family: system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, sans-serif;
+     font-size: 14px;
+ }
+ .pic_preview {
+     height: auto;
+     padding-bottom: 100%;
+     background-size: cover;
+     background-position: center;
+ }
+ .price {
+     font-size: 18px;
+     font-weight: 500;
+     color: #f57224;
+ }
+ .discount_price {
+     font-size: 10px;
+     color: #9e9e9e;
+ }
+ .cus-icon:before {
+     width: 30px;
+     height: 30px;
+ }
+ /*sidemenu ด้านซ้าย*/
+
+ .l-sidenav {
+     position: fixed;
+     z-index: 1040;
+     top: 0;
+     left: 0;
+     height: 100%;
+     width: 0;
+     overflow-x: hidden;
+ }
+ /*sidemenu ด้านขวา*/
+
+ .r-sidenav {
+     position: fixed;
+     z-index: 1040;
+     top: 0;
+     right: 0;
+     height: 100%;
+     width: 0;
+     overflow-x: hidden;
+ }
+ /*คลุมดำพื้นที่เนื้อหา*/
+
+ .page-overlay-bg {
+     position: absolute;
+     z-index: 1040;
+     width: 0;
+     height: 100%;
+     background-color: rgba(0, 0, 0, 0.4);
+ }
+ .pull-left {
+     float: left;
+ }
+ .pull-right {
+     float: right;
+ }
+ .text-center {
+     text-align: center;
+ }
+ .img-Rounded {
+     border-radius: 25%;
+ }
+
+ .debug {
+    margin: top: 100px;
+ }
