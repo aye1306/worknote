@@ -64,6 +64,33 @@ class function_all
 			}
 		}
 	}
+
+	public function getwork_type()
+	{
+		$db = new Database();
+		$con = $db->DatabaseConfig();
+
+		$sql = "SELECT * FROM work_type";
+		$query = mysqli_query($con,$sql) or die ("Error in query: $sql " . mysqli_error());
+
+		$row = mysqli_num_rows($query);
+		$wt_id = array();
+		$wt_name = array();
+		$time = array();
+		if($row <= 0){
+			$result = array('status' => 0);
+		}else{
+			
+			while($r = mysqli_fetch_array($query,MYSQLI_ASSOC)) {
+				$wt_name[] = $r['wt_name'];
+				$wt_id[] = $r['wt_id'];
+				$time[] = $r['time_reg'];
+			}
+			$result = array('status'=>1,'wt_name'=>$wt_name,'wt_id'=>$wt_id,'time_reg'=>$time);
+		}
+		
+		return $result;
+	}
 	
 
 

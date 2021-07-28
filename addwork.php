@@ -32,36 +32,36 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                        <label class="form-label h6" for="username"><strong>วิชา : </strong></label>
-                                        <input class="form-control" type="text" placeholder="Name"> 
+                                        <label class="form-label h6" for="subject"><strong>วิชา : </strong></label>
+                                        <input id="subject" class="form-control" type="text" placeholder="กรอกวิชา"> 
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                        <label class="form-label h6" for="username"><strong>ชื่องาน : </strong></label>
-                                        <input class="form-control" type="text" placeholder="Name"> 
+                                        <label class="form-label h6" for="w_name"><strong>ชื่องาน : </strong></label>
+                                        <input id="w_name" class="form-control" type="text" placeholder="กรอกชื่องาน"> 
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                        <label class="form-label h6" for="username"><strong>วันที่: </strong></label>
-                                        <input class="form-control" type="text" placeholder="Name"> 
+                                        <label class="form-label h6" for="date"><strong>วันที่: </strong></label>
+                                        <input id="date" class="form-control" type="text" placeholder="กรอกวันที่"> 
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                        <label class="form-label h6" for="username"><strong>เวลา : </strong></label>
-                                        <input class="form-control" type="text" placeholder="Name"> 
+                                        <label class="form-label h6" for="time"><strong>เวลา : </strong></label>
+                                        <input id="time" class="form-control" type="text" placeholder="กรอกเวลา"> 
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                        <label class="form-label h6" for="username"><strong>รายละเอียดงาน : </strong></label>
-                                        <input class="form-control" type="text" placeholder="Name"> 
+                                        <label class="form-label h6" for="desc"><strong>รายละเอียดงาน : </strong></label>
+                                        <input id="desc" class="form-control" type="text" placeholder="รายละเอียดงาน"> 
                                         </div>
                                     </div>
                                 </div>
-                                <button class="btn btn-success btn-block confirm-button mt-4">เพิ่มงาน &nbsp;<i class="fas fa-plus"></i></button>
+                                <button class="btn btn-success btn-block confirm-button mt-4" id="btn_addwork">เพิ่มงาน &nbsp;<i class="fas fa-plus"></i></button>
                             </div>
                         </div>
 

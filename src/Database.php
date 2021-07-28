@@ -2,8 +2,8 @@
 
 class Database
 {
-	
-	function DatabaseConfig()
+
+	public function DatabaseConfig()
 	{
 		$host = "localhost";
 		$username = "root";

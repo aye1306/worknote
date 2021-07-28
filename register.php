@@ -7,7 +7,7 @@
             <?php include('include/navbar.php'); ?>
             <div class="container ">
                 <div class="debug" style="margin-top:60px;">
-                    <p class="h3 text-center text-secondary"><strong>เข้าสู่ระบบ</strong></p>
+                    <p class="h3 text-center text-secondary"><strong>สมัครสมาชิก</strong></p>
                 </div>
                 <!--container-fluid-->
                 <div class="row no-gutters px-2 mt-4 align-items-center d-flex justify-content-center">

@@ -262,3 +262,4 @@ async function work_type(){
     console.log(res.data)
   });
 }
+

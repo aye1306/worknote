@@ -1,5 +1,6 @@
 <?php 
 include('FunctionAll.php');
+
 $func = new function_all();
 
     $obj = json_decode(file_get_contents('php://input'));   
@@ -23,5 +24,6 @@ $func = new function_all();
         $result = $func->register($email,$user,$pass,$nickname);
         echo json_encode($result);
     }else if($section === "worktype"){
-        echo json_encode("woww");
+        $result = $func->getwork_type();
+        echo json_encode($result);
     }
