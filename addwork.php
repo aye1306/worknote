@@ -18,14 +18,6 @@
                             <div class="card-body">
                                 <p class="card-title mb-3 h4"><strong>ระบุรายละเอียดงาน</strong></p>
                                 <div class="row align-items-center d-flex justify-content-start" id="work_type"> 
-                                    <div class="col-6">
-                                        <label class="radio mr-1"> 
-                                            <input type="radio" name="add" value="0" checked> 
-                                            <span style="font-size:20px;">
-                                                <strong>&nbsp;<i class="fas fa-file-alt text-primary"></i>&nbsp; งานเดี่ยว</strong>
-                                            </span> 
-                                        </label>
-                                    </div>
                                     
                                 </div>
                                 <hr>
@@ -83,5 +75,8 @@
         if (length == 0) {
             location.href = location.origin+"/worksnotes/login.php";
         } // checklogin
+
+        
+work_type()
     });
 </script>

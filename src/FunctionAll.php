@@ -74,19 +74,21 @@ class function_all
 		$query = mysqli_query($con,$sql) or die ("Error in query: $sql " . mysqli_error());
 
 		$row = mysqli_num_rows($query);
-		$wt_id = array();
-		$wt_name = array();
-		$time = array();
+		$return_arr = array();
+
 		if($row <= 0){
 			$result = array('status' => 0);
 		}else{
-			
-			while($r = mysqli_fetch_array($query,MYSQLI_ASSOC)) {
-				$wt_name[] = $r['wt_name'];
-				$wt_id[] = $r['wt_id'];
-				$time[] = $r['time_reg'];
+
+			while ($row = mysqli_fetch_array($query,MYSQLI_ASSOC)) {
+				$row_array['wt_id'] = $row['wt_id'];
+				$row_array['wt_name'] = $row['wt_name'];
+				$row_array['time_reg'] = $row['time_reg'];
+
+				array_push($return_arr,$row_array);
 			}
-			$result = array('status'=>1,'wt_name'=>$wt_name,'wt_id'=>$wt_id,'time_reg'=>$time);
+			
+			$result = array('status'=>1,'data'=>$return_arr);
 		}
 		
 		return $result;

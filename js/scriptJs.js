@@ -251,7 +251,6 @@ function checkpass(){
    
   }
 
-work_type()
 async function work_type(){
   const send_data = {
     "section":"worktype"
@@ -259,7 +258,25 @@ async function work_type(){
   axios.post(location.origin+"/worksnotes/src/ControllerHome.php", 
             JSON.stringify(send_data)                
   ).then(function(res) {
-    console.log(res.data)
-  });
+    const result = res.data;
+    
+    result.data.forEach((val,i)=>{
+      $("#work_type").append(
+        '<div class="col-6">'
+        +'  <label class="radio mr-1"> '
+        +'      <input type="radio" name="add" value="'+val.wt_id+'">'
+        +'      <span style="font-size:20px;">'
+        +'          <strong>&nbsp;<i class="fas fa-file-alt text-primary"></i>&nbsp; '+val.wt_name+'</strong>'
+        +'      </span> '
+        +'  </label>'
+        +'</div>'
+      );
+    })
+
+
+
+
+
+  }); // then
 }
 
