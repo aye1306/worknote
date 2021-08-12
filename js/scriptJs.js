@@ -415,7 +415,7 @@ async function checkWork(){
                               <h5 class="text-dark">${des}</h5>
                             </div>
                             <div class="align-items-center d-flex justify-content-between mt-4">
-                              <button type="button" class="btn btn-warning btn-sm" onclick="updateModalGetValue(${val.w_id})">แก้ไขงาน</button>
+                              <button type="button" class="btn btn-warning btn-sm" onclick="updateModalGetValue('${val.w_name}','${val.w_id}')">แก้ไขงาน</button>
                               <button type="button" class="btn btn-danger btn-sm">ลบงาน</button>
                             </div>
                           </div>
@@ -428,8 +428,9 @@ async function checkWork(){
 
 }
 
-function updateModalGetValue(w_name){
+function updateModalGetValue(w_name,w_id){
+  console.log(w_name,w_id);
   $('#updateWorkmodal').modal('show');
-  console.log(w_name);
+  $('#u_name').val(w_name)
 }
 

@@ -69,27 +69,27 @@
                                             <div class="col-sm-12">
                                                 <div class="form-group">
                                                 <label class="form-label h6" for="w_name"><strong>ชื่องาน : </strong></label>
-                                                <input id="w_name" class="form-control" type="text" placeholder="กรอกชื่องาน"> 
+                                                <input id="u_name" class="form-control" type="text" placeholder="กรอกชื่องาน"> 
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="form-group">
                                                     <div class="input-wrap">
                                                     <label class="form-label h6" for="deadline"><strong>วันที่ : </strong></label>
-                                                    <input type="date" id="deadline"class="form-control appointment_date" placeholder="เดดไลน์งาน วันที่" autocomplete="off">
+                                                    <input type="u_date" id="deadline"class="form-control appointment_date" placeholder="เดดไลน์งาน วันที่" autocomplete="off">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="form-group">
                                                 <label class="form-label h6" for="time"><strong>เวลา : </strong></label>
-                                                <input id="time" class="form-control" type="time" placeholder="กรอกเวลา"> 
+                                                <input id="u_time" class="form-control" type="time" placeholder="กรอกเวลา"> 
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="form-group">
                                                     <label class="form-label h6" for="desc"><strong>รายละเอียดงาน : </strong></label>
-                                                    <textarea id="desc" cols="30" rows="6" class="form-control" placeholder="รายละเอียดงาน (ใส่ไม่ใส่ก็ได้)"></textarea>
+                                                    <textarea id="u_desc" cols="30" rows="6" class="form-control" placeholder="รายละเอียดงาน (ใส่ไม่ใส่ก็ได้)"></textarea>
                                                 </div>
                                             </div>
                                             <button class="btn btn-warning btn-block confirm-button mt-4"  onclick="editWork()">แก้ไขงาน &nbsp;<i class="fas fa-edit"></i></button>
