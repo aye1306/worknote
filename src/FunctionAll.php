@@ -93,6 +93,29 @@ class function_all
 		
 		return $result;
 	}
+
+
+	public function addwork($subject,$workname,$finalDeadline,$w_type, $text, $user_id)
+	{	
+		$db = new Database();
+		$con = $db->DatabaseConfig();
+
+		$sql = sprintf("INSERT INTO work(w_type, w_subject, w_name, w_date, w_des, status, u_id) VALUES ( %d, '%s', '%s', '%s', '%s', 0, %d )",
+				$con->escape_string($w_type),
+				$con->escape_string($subject),
+				$con->escape_string($workname),
+				$con->escape_string($finalDeadline),
+				$con->escape_string($text),
+				$con->escape_string($user_id)
+		);
+
+		$insert = mysqli_query($con,$sql) or die ("Error in query: $sql " . mysqli_error());
+		if($insert){
+			return "1";
+		}else{
+			return "0";
+		}
+	}
 	
 
 

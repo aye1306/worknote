@@ -6,7 +6,8 @@ async function queryWork(){
   if(data.status === 0){
     $("#w_size_span").append(0);
   }else{
-    data.result.forEach((val,i)=>{
+    $("#w_size_span").append(data.data.length);
+    data.data.forEach((val,i)=>{
       if (val.w_des == "") {
         des = '<h5 class="text-danger">ไม่ได้ใส่รายละเอียด</h5>';
       }else{
@@ -264,7 +265,7 @@ async function work_type(){
       $("#work_type").append(
         '<div class="col-6">'
         +'  <label class="radio mr-1"> '
-        +'      <input type="radio" name="add" value="'+val.wt_id+'">'
+        +'      <input type="radio" name="w_type" id="w_type" value="'+val.wt_id+'">'
         +'      <span style="font-size:20px;">'
         +'          <strong>&nbsp;<i class="fas fa-file-alt text-primary"></i>&nbsp; '+val.wt_name+'</strong>'
         +'      </span> '
@@ -272,11 +273,64 @@ async function work_type(){
         +'</div>'
       );
     })
-
-
-
-
-
   }); // then
+}
+
+
+async function addwork(){
+  const subject = $("#subject").val();
+  const workname = $("#w_name").val();
+  const deadline = $("#deadline").val();
+  const time = $("#time").val()+":00";
+  const desc = $("#desc").val();
+  var w_type = $("input[name='w_type']:checked").val();
+  
+  console.log(deadline,time);
+  if (w_type == undefined) {
+    Swal.fire({
+      icon: 'info',
+      title: 'เลือกประเภทงาน',
+      text: 'ตรวจสอบว่าเลือกประเภทงานแล้ว !!'
+    })
+  }else if (subject == '') {
+     Swal.fire({
+      icon: 'info',
+      title: 'กรอกวิชา',
+      text: 'ตรวจสอบว่ากรอกวิชาแล้ว !!'
+    })
+   }else if (workname == '') {
+     Swal.fire({
+      icon: 'info',
+      title: 'กรอกชื่องาน',
+      text: 'ตรวจสอบว่ากรอกชื่องานแล้ว !!'
+    })
+  }else if (deadline == '') {
+     Swal.fire({
+      icon: 'info',
+      title: 'เลือกวันที่',
+      text: 'ตรวจสอบว่าเลือกวันที่แล้ว !!'
+    })
+  }else if (time == '') {
+     Swal.fire({
+      icon: 'info',
+      title: 'เลือกเวลา',
+      text: 'ตรวจสอบว่าเลือกเวลาแล้วแล้ว !!'
+    })
+  }else{
+    const user_id = JSON.parse(localStorage.getItem("UserData")).user_id;
+    const send_data = {
+      "subject":subject,"workname":workname,"deadline":deadline,"user_id":user_id,
+      "time":time,"desc":desc,"w_type":w_type,"section":"addwork"
+    } 
+    axios.post(location.origin+"/worksnotes/src/ControllerHome.php", 
+              JSON.stringify(send_data)                
+    ).then(function(response) {
+      console.log(response.data);
+      const jsonob = response.data;
+      const status = jsonob.status;
+    });
+
+  }
+
 }
 

@@ -26,4 +26,32 @@ $func = new function_all();
     }else if($section === "worktype"){
         $result = $func->getwork_type();
         echo json_encode($result);
+
+    }else if ($section === "addwork") {
+
+        $subject = htmlentities($obj->subject);
+        $workname = htmlentities($obj->workname);
+        $deadline = htmlentities($obj->deadline);
+        $time = htmlentities($obj->time);
+        $desc = htmlentities($obj->desc);
+        $w_type = htmlentities($obj->w_type);
+        $text = str_replace("\n","<br>","$desc");
+        $user_id =  htmlentities($obj->user_id);
+
+        $today = date('Y-m-d');
+        //แปลงวันที่เป็นจำนวนเลข 
+        list($yearToday, $monthToday, $dayToday) = explode("-", $today);
+        list($year, $month, $day) = explode("-", $deadline);
+
+        $todayNumber = $yearToday.$monthToday.$dayToday;
+        $deadlineNumber = $year.$month.$day;
+
+        $finalDeadline = $deadline." ".$time;
+
+        if ($deadlineNumber < $todayNumber) {
+            echo "lastdate";
+        }else{
+            $result = $func->addwork($subject,$workname,$finalDeadline,$w_type, $text, $user_id);
+            echo json_encode($result);
+        }
     }

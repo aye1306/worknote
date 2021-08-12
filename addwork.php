@@ -11,7 +11,7 @@
                     <p class="h3 text-center text-secondary"><strong>เพิ่มงานใหม่</strong></p>
                 </div>
                 <hr>
-                <div class="row no-gutters px-1 mt-3" id="work">
+                <div class="row no-gutters px-1 mt-3">
                     <!--row-->
                     <div class="col-md">
                     <div class="card px-1">
@@ -36,24 +36,26 @@
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                        <label class="form-label h6" for="date"><strong>วันที่: </strong></label>
-                                        <input id="date" class="form-control" type="text" placeholder="กรอกวันที่"> 
+                                            <div class="input-wrap">
+                                            <label class="form-label h6" for="deadline"><strong>วันที่ : </strong></label>
+                                            <input type="date" id="deadline"class="form-control appointment_date" placeholder="เดดไลน์งาน วันที่" autocomplete="off">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                         <label class="form-label h6" for="time"><strong>เวลา : </strong></label>
-                                        <input id="time" class="form-control" type="text" placeholder="กรอกเวลา"> 
+                                        <input id="time" class="form-control" type="time" placeholder="กรอกเวลา"> 
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                        <label class="form-label h6" for="desc"><strong>รายละเอียดงาน : </strong></label>
-                                        <input id="desc" class="form-control" type="text" placeholder="รายละเอียดงาน"> 
+                                            <label class="form-label h6" for="desc"><strong>รายละเอียดงาน : </strong></label>
+                                            <textarea id="desc" cols="30" rows="6" class="form-control" placeholder="รายละเอียดงาน (ใส่ไม่ใส่ก็ได้)"></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <button class="btn btn-success btn-block confirm-button mt-4" id="btn_addwork">เพิ่มงาน &nbsp;<i class="fas fa-plus"></i></button>
+                                <button class="btn btn-success btn-block confirm-button mt-4"  onclick="addwork()">เพิ่มงาน &nbsp;<i class="fas fa-plus"></i></button>
                             </div>
                         </div>
 
@@ -74,9 +76,7 @@
         const length = localStorage.length;
         if (length == 0) {
             location.href = location.origin+"/worksnotes/login.php";
-        } // checklogin
-
-        
-work_type()
+        } // checklogin    
+    work_type()
     });
 </script>
