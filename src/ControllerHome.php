@@ -54,4 +54,7 @@ $func = new function_all();
             $result = $func->addwork($subject,$workname,$finalDeadline,$w_type, $text, $user_id);
             echo json_encode($result);
         }
+    }else if ($section == "querySizeWork") {
+        $result = $func->getSizework($obj->user_id);
+        echo json_encode($result);
     }

@@ -32,5 +32,6 @@
         if (length == 0) {
             location.href = location.origin+"/worksnotes/login.php";
         } // checklogin
+        selectActiveNavBar(1) 
     });
 </script>

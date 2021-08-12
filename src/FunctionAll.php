@@ -116,6 +116,26 @@ class function_all
 			return "0";
 		}
 	}
+
+	public function getSizework($user_id)
+	{
+		$db = new Database();
+		$con = $db->DatabaseConfig();
+
+		$sql = "SELECT COUNT(w_id) count FROM work WHERE u_id = ".$user_id." GROUP BY status";
+		$query = mysqli_query($con,$sql) or die ("Error in query: $sql " . mysqli_error());
+
+		$row = mysqli_num_rows($query);
+		$return_arr = array();
+		while ($row = mysqli_fetch_array($query,MYSQLI_ASSOC)) {
+			$row_array['count'] = $row['count'];
+
+			array_push($return_arr,$row_array);
+		}
+		$result = array('result'=>$return_arr);
+		
+		return $result;
+	}
 	
 
 

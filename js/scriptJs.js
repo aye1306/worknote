@@ -1,7 +1,7 @@
-queryWork();
+queryWork()
 async function queryWork(){
 	let des = null;
-	const userId = JSON.parse(localStorage.getItem("UserData")).user_id;
+	let userId = JSON.parse(localStorage.getItem("UserData")).user_id;
 	const {data} = await axios.get(location.origin+"/worksnotes/src/QueryWorklast.php?user_id="+userId);
   if(data.status === 0){
     $("#w_size_span").append(0);
@@ -46,6 +46,8 @@ async function queryWork(){
   }
 
 }
+
+
 
 function conversDate(call_date){
 	const currentDate = String(call_date);
@@ -325,12 +327,109 @@ async function addwork(){
     axios.post(location.origin+"/worksnotes/src/ControllerHome.php", 
               JSON.stringify(send_data)                
     ).then(function(response) {
-      console.log(response.data);
-      const jsonob = response.data;
-      const status = jsonob.status;
+      console.log("data= "+response.data);
+      if (response.data == "1") {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'เพิ่มงานสำเร็จ',
+          text: 'กำลังโหลดอีกครั้ง',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        setTimeout(function(){ 
+          location.href = location.origin+"/worksnotes/";
+        }, 2100);
+      }else if (response.data == "lastdate") {
+        Swal.fire({
+          icon: 'info',
+          title: 'ไม่สามารถเพิ่มงานได้',
+          text: 'คุณใส่วันที่ ที่ผ่านมาแล้ว !!'
+        })
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'ไม่สามารถเพิ่มงานได้',
+          text: 'ตรวจสอบการกรอกข้อมูล !!'
+        })
+      }
     });
 
   }
 
+}
+
+//Controller Navbar
+function selectActiveNavBar(item) {
+    $( "#nav-footter"+item ).even().removeClass( "text-dark" );
+    $( "#nav-footter"+item ).addClass("text-light");
+}
+
+async function querySizeWork() {
+  const userId = JSON.parse(localStorage.getItem("UserData")).user_id;
+  const send_data = {
+    "user_id":userId,"section":"querySizeWork"
+  } 
+  
+  axios.post(location.origin+"/worksnotes/src/ControllerHome.php", 
+  JSON.stringify(send_data)                
+  ).then(function(res) {
+    $("#w_warning").append(res.data.result[0].count);
+    $("#w_success").append(res.data.result[1].count);
+    $("#w_danger").append(res.data.result[2].count);
+  });
+ 
+
+}
+
+
+async function checkWork(){
+	let des = null;
+	let userId = JSON.parse(localStorage.getItem("UserData")).user_id;
+	const {data} = await axios.get(location.origin+"/worksnotes/src/QueryWorklast.php?user_id="+userId);
+  
+    data.data.forEach((val,i)=>{
+      if (val.w_des == "") {
+        des = '<h5 class="text-danger">ไม่ได้ใส่รายละเอียด</h5>';
+      }else{
+        des =  '<h5 class="text-dark">'+val.w_des+'</h5>';
+      }
+      $("#checkWorkModal").append(
+        ` <div class="col-md-6">
+          <div class="card mb-3 ml-1 mr-1 shadow rounded">
+                      <div class="card-body" style="background-color:#C0EEFF;" aria-controls="work_show-${val.w_id}" aria-expanded="true" data-toggle="collapse" href="#work_show-${val.w_id}">
+                          <h5 class="card-subtitle text-primary">
+                            <strong>วิชา ${val.w_subject}  : 
+                              <span class="text-dark" style="font-size:18px;">${val.w_name}
+                                  <i class="fa fa-hourglass-end align-items-center d-flex justify-content-end" style="font-size:15px;color:#EA9017;">
+                                  </i>
+                              </span>
+                            </strong>
+                         </h5>
+                          <span class="text-secondary" style="font-size:18px;" id="deadline"><b>${conversDate(val.w_date)}</b></span><br>
+                          <span class="text-info">  เหลือเวลาอีก <b class="text-danger"> ${val.time} </b> วัน </span>
+                      </div>
+                      <div class="collapse" id="work_show-${val.w_id}">
+                          <div class="card-footer bg-light">
+                            <div class="align-items-center d-flex justify-content-center">
+                              <h5 class="text-dark">${des}</h5>
+                            </div>
+                            <div class="align-items-center d-flex justify-content-between mt-4">
+                              <button type="button" class="btn btn-warning btn-sm" onclick="updateModalGetValue(${val.w_id})">แก้ไขงาน</button>
+                              <button type="button" class="btn btn-danger btn-sm">ลบงาน</button>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+            </div>
+          `
+      );
+    })
+
+}
+
+function updateModalGetValue(w_name){
+  $('#updateWorkmodal').modal('show');
+  console.log(w_name);
 }
 

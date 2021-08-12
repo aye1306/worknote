@@ -77,6 +77,7 @@
         if (length == 0) {
             location.href = location.origin+"/worksnotes/login.php";
         } // checklogin    
-    work_type()
+    work_type();
+    selectActiveNavBar(2); 
     });
 </script>
