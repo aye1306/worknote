@@ -18,11 +18,11 @@
                                 <h4><strong>งานที่ต้องทำ</strong></h4>
                                 <h5><span class="badge badge-warning badge-pill" id="w_warning"></span></h5>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <li class="list-group-item d-flex justify-content-between align-items-center disabled">
                                 <h4><strong>งานที่ทำเสร็จไปแล้ว</strong></h4>
                                 <h5><span class="badge badge-success badge-pill" id="w_success"></span></h5>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <li class="list-group-item d-flex justify-content-between align-items-center disabled">
                                 <h4><strong>งานที่หมดเขตส่ง</strong></h4>
                                 <h5><span class="badge badge-danger badge-pill" id="w_danger"></span></h5>
                         </li>
@@ -70,13 +70,14 @@
                                                 <div class="form-group">
                                                 <label class="form-label h6" for="w_name"><strong>ชื่องาน : </strong></label>
                                                 <input id="u_name" class="form-control" type="text" placeholder="กรอกชื่องาน"> 
+                                                <input id="u_id" class="form-control" type="hidden"> 
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="form-group">
                                                     <div class="input-wrap">
                                                     <label class="form-label h6" for="deadline"><strong>วันที่ : </strong></label>
-                                                    <input type="u_date" id="deadline"class="form-control appointment_date" placeholder="เดดไลน์งาน วันที่" autocomplete="off">
+                                                    <input type="date" id="u_date" class="form-control appointment_date" placeholder="เดดไลน์งาน วันที่" autocomplete="off" value="">
                                                     </div>
                                                 </div>
                                             </div>

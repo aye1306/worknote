@@ -136,6 +136,28 @@ class function_all
 		
 		return $result;
 	}
+
+
+
+	public function EditWork($workname,$finalDeadline,$work_id, $text)
+	{
+		$db = new Database();
+		$con = $db->DatabaseConfig();
+
+		$sql = sprintf("UPDATE work SET w_name='%s',w_date='%s',w_des='%s' WHERE w_id = %d",
+				$con->escape_string($workname),
+				$con->escape_string($finalDeadline),
+				$con->escape_string($text),
+				$con->escape_string($work_id)
+		);
+
+		$update = mysqli_query($con,$sql) or die ("Error in query: $sql " . mysqli_error());
+		if($update){
+			return "1";
+		}else{
+			return "0";
+		}
+	}
 	
 
 

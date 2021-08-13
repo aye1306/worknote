@@ -57,4 +57,32 @@ $func = new function_all();
     }else if ($section == "querySizeWork") {
         $result = $func->getSizework($obj->user_id);
         echo json_encode($result);
+    }else if($section == "editWork"){
+
+        $work_id = htmlentities($obj->workId);
+        $workname = htmlentities($obj->workname);
+
+        $deadline = htmlentities($obj->deadline);
+        $time = htmlentities($obj->time);
+        $finalDeadline = $deadline." ".$time;
+
+        $desc = htmlentities($obj->desc);
+        $text = str_replace("\n","<br>","$desc");
+        
+        $today = date('Y-m-d');
+        //แปลงวันที่เป็นจำนวนเลข 
+        list($yearToday, $monthToday, $dayToday) = explode("-", $today);
+        list($year, $month, $day) = explode("-", $deadline);
+
+        $todayNumber = $yearToday.$monthToday.$dayToday;
+        $deadlineNumber = $year.$month.$day;
+
+        $finalDeadline = $deadline." ".$time;
+
+        if ($deadlineNumber < $todayNumber) {
+            echo "lastdate";
+        }else{
+            $result = $func->EditWork($workname,$finalDeadline,$work_id, $text);
+            echo json_encode($result);
+        }
     }

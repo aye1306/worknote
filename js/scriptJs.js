@@ -283,11 +283,10 @@ async function addwork(){
   const subject = $("#subject").val();
   const workname = $("#w_name").val();
   const deadline = $("#deadline").val();
-  const time = $("#time").val()+":00";
+  const time = $("#time").val();
   const desc = $("#desc").val();
   var w_type = $("input[name='w_type']:checked").val();
   
-  console.log(deadline,time);
   if (w_type == undefined) {
     Swal.fire({
       icon: 'info',
@@ -412,10 +411,10 @@ async function checkWork(){
                       <div class="collapse" id="work_show-${val.w_id}">
                           <div class="card-footer bg-light">
                             <div class="align-items-center d-flex justify-content-center">
-                              <h5 class="text-dark">${des}</h5>
+                             ${des}
                             </div>
                             <div class="align-items-center d-flex justify-content-between mt-4">
-                              <button type="button" class="btn btn-warning btn-sm" onclick="updateModalGetValue('${val.w_name}','${val.w_id}')">แก้ไขงาน</button>
+                              <button type="button" class="btn btn-warning btn-sm" onclick="updateModalGetValue('${val.w_id}','${val.w_name}','${val.w_date}','${val.w_des}')">แก้ไขงาน</button>
                               <button type="button" class="btn btn-danger btn-sm">ลบงาน</button>
                             </div>
                           </div>
@@ -428,9 +427,93 @@ async function checkWork(){
 
 }
 
-function updateModalGetValue(w_name,w_id){
-  console.log(w_name,w_id);
+function updateModalGetValue(w_id,w_name,w_date,w_desc){
+  console.log(w_name,w_id,w_date);
   $('#updateWorkmodal').modal('show');
-  $('#u_name').val(w_name)
+  $('#u_name').val(w_name);
+  $('#u_id').val(w_id);
+  const current = w_date.split(" ");
+  const date = current[0];
+  const time = current[1];
+
+  const u_date = date.split("-");
+  console.log("'"+u_date[0]+"-"+u_date[1]+"-"+u_date[2]+"'");
+  document.getElementById('u_date').value = u_date[0]+"-"+u_date[1]+"-"+u_date[2];
+  $('#u_time').val(time);
+  $('#u_desc').val(w_desc);
+
 }
 
+
+
+function editWork() {
+  const w_id = $('#u_id').val();
+  const w_name = $('#u_name').val();
+  const deadline = $("#u_date").val();
+  const time = $("#u_time").val();
+  const desc = $("#u_desc").val();
+
+  const send_data = {
+    "workname":w_name,"deadline":deadline,"workId":w_id,
+    "time":time,"desc":desc,"section":"editWork"
+  }
+
+  if (w_name == '') {
+    Swal.fire({
+      icon: 'info',
+      title: 'กรอกชื่องาน',
+      text: 'ตรวจสอบว่ากรอกชื่องานแล้ว !!'
+    })
+  }else if (deadline == '') {
+    Swal.fire({
+      icon: 'info',
+      title: 'เลือกวันที่',
+      text: 'ตรวจสอบว่าเลือกวันที่แล้ว !!'
+    })
+   }else if (time == '') {
+    Swal.fire({
+      icon: 'info',
+      title: 'เลือกเวลา',
+      text: 'ตรวจสอบว่าเลือกเวลาแล้วแล้ว !!'
+    })
+  }else {
+    console.log("send_Data : ",send_data)
+
+    axios.post(location.origin+"/worksnotes/src/ControllerHome.php", 
+              JSON.stringify(send_data)                
+    ).then(function(response) {
+
+    });
+
+    axios.post(location.origin+"/worksnotes/src/ControllerHome.php", 
+      JSON.stringify(send_data)
+    ).then(function(res){
+      if (res.data == "1") {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'แก้ไขงานสำเร็จ',
+          text: 'กำลังโหลดหน้าใหม่',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        setTimeout(function(){ 
+          location.reload();
+        }, 2100);
+      }else if (res.data == "lastdate") {
+        Swal.fire({
+          icon: 'info',
+          title: 'ไม่สามารถแก้ไขงานได้',
+          text: 'คุณใส่วันที่ ที่ผ่านมาแล้ว !!'
+        })
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'ไม่สามารถแก้ไขงานได้',
+          text: 'ตรวจสอบการกรอกข้อมูล !!'
+        })
+      }
+    })
+  }
+
+}
